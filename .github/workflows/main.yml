@@ -37,10 +37,11 @@ jobs:
           ./build.sh -i debian:unstable-slim
           rename.ul .deb _unstable.deb target/${{ env.PKG_NAME }}_*.deb
           mv -n target/${{ env.PKG_NAME }}_*.deb assets/
-
-      - name: Build packages
-        uses: "marvinpinto/action-automatic-releases@v1.2.1"
+    
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          files: assets/*.deb
+           files: assets/*.deb
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     
